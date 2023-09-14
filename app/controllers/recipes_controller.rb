@@ -15,4 +15,20 @@ class RecipesController < ApplicationController
   def new
     @recipes = Recipe.new
   end
+
+  def create
+    redirect_to public_recipes_path unless current_user
+
+    recipe = Recipe.new(required_params)
+
+    if recipe.save
+      redirect_to recipe_path(recipe.id), notice: 'Great, you added a new recipe!'
+    else
+      redirect_to new_recipe_path, notice: 'Sorry, could not create your recipe!'
+    end
+  end
+
+  def required_params
+    params.require(:recipe).permit(:name, :user_id, :preparation_time, :cooking_time, :description, :public)
+  end
 end
