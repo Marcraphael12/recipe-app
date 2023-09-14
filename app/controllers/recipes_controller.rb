@@ -9,5 +9,6 @@ class RecipesController < ApplicationController
   end
 
   def show
+    @recipes = Recipe.find(params[:id])
   end
 end
