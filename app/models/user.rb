@@ -5,4 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :foods
   has_many :recipes
+
+  def users_recipe
+    recipes
+  end
 end
