@@ -6,7 +6,7 @@ class User < ApplicationRecord
   has_many :foods
   has_many :recipes
 
-  def users_recipe
+  def user_recipe
     recipes
   end
 end
