@@ -3,7 +3,9 @@ class FoodsController < ApplicationController
 
   def index
     @food = Food.new
-    @foods = current_user.foods
+    @foods = current_user.foods.select('foods.*, COUNT(recipe_foods.id) as quantity')
+      .left_joins(:recipe_foods)
+      .group(:id)
   end
 
   def create
@@ -18,6 +20,6 @@ class FoodsController < ApplicationController
   private
 
   def food_params
-    params.require(:food).permit(:name, :description, :other_attributes)
+    params.require(:food).permit(:name, :measurement_unit, :price)
   end
 end

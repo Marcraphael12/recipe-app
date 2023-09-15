@@ -2,9 +2,18 @@
 <p>Find me in app/views/foods/index.html.erb</p>
 
 <%= form_with model: @food, url: foods_path, method: :post do |f| %>
-  <%= f.text_field :name, placeholder: 'Name' %>
-  <%= f.text_area :description, placeholder: 'Description' %>
-  <%= f.text_field :other_attributes, placeholder: 'Other Attributes' %>
+  <div>
+    <%= f.label :name, 'Name:' %>
+    <%= f.text_field :name, placeholder: 'Name' %>
+  </div>
+  <div>
+    <%= f.label :measurement_unit, 'Measurement Unit:' %>
+    <%= f.text_field :measurement_unit, placeholder: 'Measurement Unit' %>
+  </div>
+  <div>
+    <%= f.label :price, 'Price:' %>
+    <%= f.text_field :price, placeholder: 'Price' %>
+  </div>
   <%= f.submit 'Create Food' %>
 <% end %>
 
@@ -12,7 +21,9 @@
   <h2>Your Foods:</h2>
   <ul>
     <% @foods.each do |food| %>
-      <li><%= food.name %></li>
+      <li>
+        <%= "#{food.name} (Measurement Unit: #{food.measurement_unit}) (Unit Price: #{food.price})" %>
+      </li>
     <% end %>
   </ul>
 <% end %>
