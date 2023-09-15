@@ -55,7 +55,9 @@
     <% @foods.each do |food| %>
       <li>
         <%= "#{food.name} (Measurement Unit: #{food.measurement_unit}) (Unit Price: #{food.price})" %>
-        <%= link_to 'Delete', food_path(food), class: 'delete-food', data: { confirm: 'Are you sure?' } %>
+        <%= form_with(model: food, local: true, html: { method: :delete, class: 'delete-food-form' }) do |form| %>
+            <%= form.submit 'Delete', data: { confirm: 'Are you sure?' }, class: 'delete-food-button' %>
+        <% end %>
       </li>
     <% end %>
   </ul>
