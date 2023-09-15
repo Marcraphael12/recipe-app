@@ -23,7 +23,6 @@ class FoodsController < ApplicationController
     redirect_to foods_path, notice: 'Food item deleted.'
   end
 
-
   private
 
   def food_params
