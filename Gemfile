@@ -64,7 +64,6 @@ group :development, :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
-  gem 'factory_girl_rails'
   gem 'rspec-rails', '>= 3.9.0'
 
   # The following gems aids with the nuts and bolts
