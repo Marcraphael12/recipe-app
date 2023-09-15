@@ -1,2 +1,12 @@
 <h1>GeneralShoppingLists#index</h1>
-<p>Find me in app/views/general_shopping_list/index.html.erb</p>
+<p>Find me in app/views/general_shopping_lists/index.html.erb</p>
+
+<h2>Missing Food Items</h2>
+<ul>
+  <% missing_food_items.each do |food_item| %>
+    <li><%= "#{food_item.name} (Measurement Unit: #{food_item.measurement_unit}) (Price: #{food_item.price})" %></li>
+  <% end %>
+</ul>
+
+<p>Total Missing Food Items: <%= total_missing_items %></p>
+<p>Total Missing Food Price: <%= total_missing_price %></p>
