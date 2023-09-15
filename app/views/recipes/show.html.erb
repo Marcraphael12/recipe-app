@@ -1,7 +1,19 @@
-<h1 class=""><%= @recipe.name %></h1>
-<div class="">
-  <h4 class="">Preparation time: <span><%= @recipe.preparation_time %> minutes</span></h4>
-  <div class="">This recipe is <span class="font-bold"><%= @recipe.public ? 'public' : 'Private' %></span></div>
-  <h4 class="">Cooking time: <span><%= @recipe.cooking_time %> minutes</span></h4>
+<h1><%= @recipe.name %></h1>
+<div>
+  <h4>Preparation time: <span><%= @recipe.preparation_time %> minutes</span></h4>
+  <div>
+    This recipe is <span><%= @recipe.public ? 'public' : 'Private' %></span>
+    <% if can? :manage, @recipe %>
+      <%= button_to "Make it #{@recipe.public ? 'private' : 'public'}", recipe_path(@recipe.id), class: 'underline', method: :patch %>
+    <% end %>
+  </div>
+  <h4>Cooking time: <span><%= @recipe.cooking_time %> minutes</span></h4>
+  <% if can? :manage, @recipe %>
+    <%= link_to "Generate shopping list", general_shopping_list_index_path%>
+    <%= link_to "Add ingredient", new_recipe_recipe_food_path(@recipe.id) %>
+  <% end %>
 </div>
+<% if @recipe.foods.present? %>
+  <%= render "table" %>
+<% end %>
 <p><%= @recipe.description %></p>
