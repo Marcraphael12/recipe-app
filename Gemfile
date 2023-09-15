@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.3'
+ruby '3.2.2'
 
 gem 'devise-jwt'
 gem 'dotenv-rails'
@@ -16,6 +16,8 @@ gem 'rails-controller-testing'
 gem 'devise'
 
 gem 'cancancan'
+
+gem 'rubocop'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'

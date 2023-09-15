@@ -3,6 +3,11 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Set the cache store to use a file store with a specific temp directory.
+  config.assets.configure do |env|
+    env.cache = ActiveSupport::Cache.lookup_store(:file_store, '/actual/path/to/your/alternative/temp/directory')
+  end
+
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
