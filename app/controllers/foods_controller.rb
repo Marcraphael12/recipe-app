@@ -3,9 +3,7 @@ class FoodsController < ApplicationController
 
   def index
     @food = Food.new
-    @foods = current_user.foods.select('foods.*, COUNT(recipe_foods.id) as quantity')
-      .left_joins(:recipe_foods)
-      .group(:id)
+    @foods = current_user.foods
   end
 
   def create
@@ -13,9 +11,12 @@ class FoodsController < ApplicationController
     if @food.save
       redirect_to foods_path, notice: 'Great, you have a new food!'
     else
+      flash.now[:alert] = 'Please fill in all required fields.'
+      @foods = current_user.foods
       render :index
     end
   end
+
 
   private
 
