@@ -9,11 +9,18 @@ class RecipesController < ApplicationController
   end
 
   def show
-    @recipes = Recipe.find(params[:id])
+    @recipe = Recipe.includes(:foods).find(params[:id])
   end
 
   def new
     @recipes = Recipe.new
+  end
+
+  def update
+    recipe = Recipe.find(params[:id])
+    recipe.update(public: !recipe.public)
+
+    redirect_to recipe_path(recipe.id), notice: "The recipe is now #{recipe.public ? 'public' : 'private'}!"
   end
 
   def create

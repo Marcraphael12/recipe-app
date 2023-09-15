@@ -1,0 +1,8 @@
+<li>
+  <%= link_to recipe_path(recipe.id) do  %>
+    <h3><%= recipe.name %></h3>
+  <% end %>
+  <h3>Total food items: <span><%= recipe.foods.count %></span></h3>
+  <h3>by <span><%= recipe.user.name %></span></h3>
+  <h3>Total price: <span><%= recipe.foods.sum :price %></span></h3>
+</li>
