@@ -30,3 +30,6 @@ config/database.yml
 /config/master.key
 
 node_modules/
+
+/app/assets/builds/*
+!/app/assets/builds/.keep
