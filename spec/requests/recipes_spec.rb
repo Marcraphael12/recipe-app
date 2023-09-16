@@ -24,8 +24,8 @@ RSpec.describe 'Recipes', type: :request do
   describe 'GET /show' do
     before(:each) do
       user = User.create name: 'Test user', email: 'test@example.com', password: 'password'
-      recipe = Recipe.create(name: 'Test recipe', cooking_time: 2, preparation_time: 10,
-                             description: 'Test description', public: true, user:)
+      recipe = Recipe.create name: 'Test recipe', cooking_time: 2, preparation_time: 10,
+                             description: 'Test description', public: true, user: user
       post user_session_path, params: { user: { email: user.email, password: user.password } }
       get recipe_path(recipe.id)
     end
