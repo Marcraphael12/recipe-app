@@ -201,8 +201,6 @@ Example command:
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-> Describe 1 - 3 features you will add to the project.
-
 - [ ] **User Profiles and Authentication**
 - [ ] **Recipe Ratings and Reviews**
 - [ ] **Advanced Search and Filters**
