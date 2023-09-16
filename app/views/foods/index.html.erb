@@ -1,64 +1,31 @@
-<h1>Foods#index</h1>
-<p>Find me in app/views/foods/index.html.erb</p>
-
-<button id="showFormButton">Add new food</button>
-
-<div id="foodForm" style="display: none;">
-  <%= form_with model: @food, url: foods_path, method: :post, id: 'food-form' do |f| %>
-    <div>
-      <%= f.label :name, 'Name:' %>
-      <%= f.text_field :name, placeholder: 'Name', required: true %>
-    </div>
-    <div>
-      <%= f.label :measurement_unit, 'Measurement Unit:' %>
-      <%= f.text_field :measurement_unit, placeholder: 'Measurement Unit', required: true %>
-    </div>
-    <div>
-      <%= f.label :price, 'Price:' %>
-      <%= f.text_field :price, placeholder: 'Price', required: true, type: 'number', step: '1' %>
-    </div>
-    <%= f.submit 'Create Food' %>
-  <% end %>
-  <div id="formErrorMessage" style="color: red;"></div>
+<h1 class="text-4xl font-semibold text-center mb-10">Foods</h1>
+<div class="text-right">
+  <button class="bg-white text-gray-800 border border-gray-300 w-30 h-10 rounded-md shadow inline text-right">
+      <%= link_to 'Add New Food', new_food_path %>
+  </button>
 </div>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const showFormButton = document.getElementById("showFormButton");
-    const foodForm = document.getElementById("foodForm");
-    const formErrorMessage = document.getElementById("formErrorMessage");
-
-    showFormButton.addEventListener("click", function() {
-      foodForm.style.display = "block";
-    });
-
-    foodForm.addEventListener("submit", function(event) {
-      const nameField = foodForm.querySelector("#food_name");
-      const measurementUnitField = foodForm.querySelector("#food_measurement_unit");
-      const priceField = foodForm.querySelector("#food_price");
-
-      if (
-        nameField.value.trim() === "" ||
-        measurementUnitField.value.trim() === "" ||
-        priceField.value.trim() === ""
-      ) {
-        event.preventDefault(); // Prevent form submission
-        formErrorMessage.textContent = "Please fill in all required fields.";
-      }
-    });
-  });
-</script>
-
-<% if @foods.present? %>
-  <h2>Your Foods:</h2>
-  <ul>
+<table class="table-auto w-full max-w-xl mx-auto text-left mb-10 text-lg">
+    <thead class="bg-gray-400">
+        <tr class="h-10">
+            <th class="p-4">Name</th>
+            <th class="p-4">Price</th>
+            <th class="p-4">Measurement unit</th>
+            <th class="p-4">Actions</th>
+        </tr>
+    </thead>
+  <tbody class="bg-gray-300 p-20">
     <% @foods.each do |food| %>
-      <li>
-        <%= "#{food.name} (Measurement Unit: #{food.measurement_unit}) (Unit Price: #{food.price})" %>
-        <%= form_with(model: food, local: true, html: { method: :delete, class: 'delete-food-form' }) do |form| %>
-            <%= form.submit 'Delete', data: { confirm: 'Are you sure?' }, class: 'delete-food-button' %>
-        <% end %>
-      </li>
+        <tr>
+        <td class="p-4"><%= food.name %></td>
+        <td class="p-4"><%= food.price %></td>
+        <td class="p-4"><%= food.measurement_unit %></td>
+        <td class="p-4"> 
+           <% if can? :destroy, food %> 
+            <%= button_to "Delete", food_path(food.id ), :method => :delete %> 
+          <% end %>
+        </td>
+        </rt>
     <% end %>
-  </ul>
-<% end %>
+  </table>
+</tbody>
+
