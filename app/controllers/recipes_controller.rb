@@ -1,19 +1,28 @@
 class RecipesController < ApplicationController
   def index
-    # checking if the `current_user` is
-    # truthy. If it is truthy, it means that the user is currently logged in. In that case, the code
-    # will not execute the `redirect_to` method.
-    redirect_to current_user_path unless current_user
+    redirect_to public_recipes_path unless current_user
 
     @recipes = current_user.recipes
   end
 
   def show
-    @recipe = Recipe.includes(:foods).find(params[:id])
+    @recipe = Recipe.includes(:foods, :recipe_foods).find(params[:id])
   end
 
   def new
-    @recipes = Recipe.new
+    @recipe = Recipe.new
+  end
+
+  def create
+    redirect_to public_recipes_path unless current_user
+
+    recipe = Recipe.new(recipe_params)
+
+    if recipe.save
+      redirect_to recipe_path(recipe.id), notice: 'recipe was successfully created!'
+    else
+      redirect_to new_recipe_path, notice: 'recipe could not be created!'
+    end
   end
 
   def update
@@ -23,19 +32,15 @@ class RecipesController < ApplicationController
     redirect_to recipe_path(recipe.id), notice: "The recipe is now #{recipe.public ? 'public' : 'private'}!"
   end
 
-  def create
-    redirect_to public_recipes_path unless current_user
-
-    recipe = Recipe.new(required_params)
-
-    if recipe.save
-      redirect_to recipe_path(recipe.id), notice: 'Great, you added a new recipe!'
-    else
-      redirect_to new_recipe_path, notice: 'Sorry, could not create your recipe!'
-    end
+  def destroy
+    recipe = Recipe.find(params[:id])
+    recipe.destroy!
+    redirect_to recipes_path, notice: "Recipe #{recipe.name} deleted successfully!"
   end
 
-  def required_params
+  private
+
+  def recipe_params
     params.require(:recipe).permit(:name, :user_id, :preparation_time, :cooking_time, :description, :public)
   end
 end
